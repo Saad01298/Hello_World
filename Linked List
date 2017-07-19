@@ -1,0 +1,241 @@
+#include<iostream>
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+using namespace std;
+
+struct node
+{
+	int data;
+	struct node * link;
+};
+
+struct node * Start = NULL;
+struct node * EvOd = NULL;
+
+
+//Inserting a Value in Linked List
+int Insert_Node()
+{
+	int n,i;
+	struct node * t, * t1;
+	t=new node();
+	cout<<"Enter the Place where You Want to Enter";
+	cin>>n;
+	cout<<"Enter the Value";
+	cin>>t->data;
+	t->link=NULL;
+	
+	if(Start==NULL)
+	{
+		Start=t;
+		return 0;
+	}
+	
+	if(n==1)
+	{
+		t->link=Start;
+		Start=t;
+	}
+	
+	else
+	{
+		t1=Start;
+		for(i=1;i<n-1;i++)
+			t1=t1->link;
+			
+		t->link=t1->link;
+		t1->link=t;
+	}
+}
+
+
+//Displaying the Linked List
+Display()
+{
+	struct node * t;
+	t=Start;
+	
+	while(t!=NULL)
+	{
+		cout<<t->data<<" ";
+		t=t->link;
+	}
+}
+
+
+//Deleting a node from Linked List
+Delete()
+{
+	int n,i;
+	struct node *t1, *t2, *t;
+	cout<<"Enter which Node you Want to delete";
+	cin>>n;
+	t1=Start;
+	t2=Start;
+	t=Start;
+	
+	for(i=1;i<n;i++)
+		t=t->link;
+	
+	for(i=1;i<n-1;i++)
+		t1=t1->link;
+		
+	for(i=1;i<n+1;i++)
+		t2=t2->link;
+		
+	t1->link=t2;
+	free(t);
+}
+
+
+//Displaying the Reverse of Linked List
+Reverse()
+{
+
+	struct node *t1, *t2, *t;
+	t1=NULL;
+	t2=NULL;
+	
+	while(Start!=NULL)
+	{
+		t1=Start;
+		Start=Start->link;
+		t1->link=t2;
+		t2=t1;
+	}
+	
+	t=t2;
+	while(t!=NULL)
+	{
+		cout<<t->data<<" ";
+		t=t->link;
+	}
+}
+
+
+//Inserting Values for EvOd
+Insert_In_EvOd(int n)
+{
+	struct node *t1, *t2;
+	t1=new node();
+	t1->data=n;
+	t1->link=NULL;
+	
+	if(EvOd==NULL)
+		EvOd=t1;
+	else
+	{
+		t2=EvOd;
+		while(t2->link!=NULL)
+			t2=t2->link;
+			
+		t2->link=t1;
+	}
+	
+}
+
+//Seperating the Even and Odd Numbers of Linked List
+Seperate_Even_Odd()
+{
+	struct node *t1, *t2, *t;
+	t=Start;
+	while(t!=NULL)
+	{
+		if((t->data)%2==0)
+			Insert_In_EvOd(t->data);
+		t=t->link;
+	}
+	
+	t=Start;
+	while(t!=NULL)
+	{
+		if((t->data)%2!=0)
+			Insert_In_EvOd(t->data);
+		t=t->link;		
+	}
+	
+	t=EvOd;
+	while(t!=NULL)
+	{
+		cout<<t->data<<" ";
+		t=t->link;
+	}
+}
+ 
+
+//Printing the Prime Numbers of Linked List
+Prime()                                       //Problem Ask??????
+{
+	int n,i,k=0;
+	struct node *t1, *t2;
+	t1=Start;
+	
+	while(t1!=NULL)
+	{
+		n=t1->data;
+		k=0;
+		for(i=2;i<n;i++)
+		{
+			if(n%i==0)
+				k++;
+		}
+		if(k==0)
+			cout<<n<<" ";
+			
+		t1=t1->link;
+	}
+}
+
+
+main()
+{
+	int i;
+	cout<<"Enter"<<endl;
+	cout<<"1 for Inserting a Value in Linked List"<<endl;
+	cout<<"2 for Displaying the Linked List"<<endl;
+	cout<<"3 for Deleting a node from Linked List"<<endl;
+	cout<<"4 for Displaying the Reverse of Linked List"<<endl;
+	cout<<"5 for Seperating the Even and Odd Numbers of Linked List"<<endl;
+	cout<<"6 for Printing the Prime Numbers of Linked List"<<endl;
+	cout<<"7 for Exit"<<endl;
+	
+	while(1)
+	{
+		cout<<"Select a Number from Menu as Required"<<endl;
+		cin>>i;
+		switch(i)
+		{
+			case 1:
+				Insert_Node();
+				break;
+				
+			case 2:
+				Display();
+				break;
+				
+			case 3:
+				Delete();
+				break;
+				
+			case 4:
+				Reverse();
+				break;
+				
+			case 5:
+				Seperate_Even_Odd();
+				break;
+				
+			case 6:
+				Prime();
+				break;
+				
+			case 7:
+				exit(0);
+				break;
+				
+			default:
+				cout<<"Wrong number Entered";
+		}
+	}
+}
