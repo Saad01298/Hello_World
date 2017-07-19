@@ -1,1 +1,89 @@
+#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
+using namespace std;
 
+struct ArrayStack
+{
+	int top;
+	int capacity;
+	int *array; 
+};
+ 
+
+struct ArrayStack * Create_Stack(int cap)
+{
+	struct ArrayStack * Stack;
+	Stack=new ArrayStack();
+	
+	Stack->top=-1;
+	Stack->capacity=cap;
+	Stack->array=(int *)malloc(sizeof(int)*(Stack->capacity));
+	return (Stack);
+}
+
+Push(struct ArrayStack * Stack ,int val)
+{
+	if(Stack->top==(Stack->capacity)-1)
+		cout<<"Stack Overflow";
+	else
+	{
+		Stack->top++;
+		Stack->array[Stack->top]=val;
+	}
+}
+
+int Pop(struct ArrayStack * Stack)
+{
+	int val;
+	if(Stack->top==-1)
+	{
+		cout<<"Stack Underflow";
+		return 0;
+	}
+	else
+	{
+		val=Stack->array[Stack->top]; //Delete to hoga nahi bas top ki value vaha se hat jaae gee ?
+		Stack->top--;
+		return(val);
+	}
+}
+
+
+main()
+{
+	int i,cap,choice,item;
+	
+	cout<<"Enetr the Capacity of Stack";
+	cin>>cap;
+	struct ArrayStack * Stack;
+	Stack=Create_Stack(cap);
+	
+	while(1)
+	{
+		cout<<"Enter"<<endl;
+		cout<<"1 for Pushing a Value in Stack"<<endl;
+		cout<<"2 for Poping a Value from Stack"<<endl;
+		cout<<"1 for Exit"<<endl;
+		
+		cin>>choice;
+		
+		switch(choice)
+		{
+			case 1:
+				cout<<"Enter the Value you want to Push in Stack"<<endl;
+				cin>>item;
+				Push(Stack,item);
+				break;
+				
+			case 2:
+				item=Pop(Stack);
+				cout<<item<<endl;
+				break;
+				
+			case 3:
+				exit(0);
+		}
+		
+	}
+}
